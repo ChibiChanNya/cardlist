@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Concator</title>
+
+<script>
+function CSVToArray(e,t){t=t||",";var n=new RegExp("(\\"+t+"|\\r?\\n|\\r|^)"+'(?:"([^"]*(?:""[^"]*)*)"|'+'([^"\\'+t+"\\r\\n]*))","gi");var r=[[]];var i=null;while(i=n.exec(e)){var s=i[1];if(s.length&&s!=t){r.push([])}if(i[2]){var o=i[2].replace(new RegExp('""',"g"),'"')}else{var o=i[3]}r[r.length-1].push(o)}return r}  
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+
+
+</head>
+<body>
+    <script>
+        var alpha;
+        var alphatarget;
+        var all = [];
+        var urls = [];
+    
+        $.ajax('alpha-'+alphatarget, function(data){
+            store = CSVToArray(data);
+            alpha.push(store);
+        });
+    
+        function loadcsv(url){
+            $.ajax(url, function(data){
+                store = CSVToArray(data);
+                betas.push(store);
+            });
+        }
+        
+        for( i=var; i < urls.length; i++ ){
+            loadcsv('beta-'urls[i]);
+        }
+        
+    </script>
+</body>
+</html>
