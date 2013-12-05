@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
 <title>Concator</title>
@@ -11,27 +12,38 @@ function CSVToArray(e,t){t=t||",";var n=new RegExp("(\\"+t+"|\\r?\\n|\\r|^)"+'(?
 </head>
 <body>
     <script>
-        var alpha;
-        var alphatarget;
-        var all = [];
-        var urls = [];
-    
-        $.ajax('alpha-'+alphatarget, function(data){
-            store = CSVToArray(data);
-            alpha.push(store);
+        var data0;
+        var alt = {};
+        function makealt(url){
+            $.ajax({url:url,success:function(request){
+                data = CSVToArray(request);
+                for (var i = 0; i < data.length; i++){
+                    var l = 'c'+data[i][0];
+                    
+                    var alt[l] = data[i][1];
+                }
+            }});
+        }
+        function tcgprint(url){
+            console.log('ok');
+            $.ajax({url:url,success:function(request){
+                data0 = CSVToArray(request);
+                console.log(data0);
+                for (var i = 0; i < data0.length; i++){
+                     l = 'c'+data0[i][0];
+                     adate =  (data0[i][1] !== '') ? (new Date(data0[i][1]).getTime()) 
+                     : (new Date(alt[l].date));
+                    
+                    expression = ""+data0[i][0]+','+adate+'\n';
+                    
+                    $('pre').append(expression);
+                }
+            }
         });
-    
-        function loadcsv(url){
-            $.ajax(url, function(data){
-                store = CSVToArray(data);
-                betas.push(store);
-            });
         }
-        
-        for( i=var; i < urls.length; i++ ){
-            loadcsv('beta-'urls[i]);
-        }
-        
+        makealt('alpha-TCG-TGPTrixie.csv');
+        tcgprint('alpha-TCG-Mele.csv');
     </script>
+    <pre></pre>
 </body>
 </html>
